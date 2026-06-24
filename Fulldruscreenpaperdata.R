@@ -1,6 +1,6 @@
-install.packages("pak")
+# install.packages("pak")
 
-pak::pak("JamesHucklesby/vascr")
+# pak::pak("JamesHucklesby/vascr")
 
 
 
@@ -145,12 +145,27 @@ run3key<- tribble(~SampleID, ~Row, ~ Column, ~ Sample,
                   103, "F", "1 2 3", "High dipyridamole",
                   103, "F", "4 5 6", "Low dipyridamole")
 
-
-# wrangling and plotting --------------------------------------------------
-
-
 run3labeled<- vascr:::vascr_apply_map(run3, run3key)
 
+
+# JH grant plot -----------------------------------------------------------
+
+plot_data_1 = run1labeled %>% vascr_zero_time(65.234) 
+plot_data_2 = run2labeled %>% vascr_zero_time(65.965)
+plot_data_3 = run3labeled %>% vascr_zero_time(63.774)
+
+combineddata <- vascr_combine(plot_data_1,plot_data_2, plot_data_3)
+
+plotdata = combineddata %>% 
+  vascr_subset(unit = "Rb") %>% 
+  vascr_resample_time(500) %>% 
+  vascr_normalise(-2, divide = TRUE) 
+
+plotdata %>% vascr_subset (sampleid = c(100,15,17,18), time=c(-4,24)) %>% vascr_summarise(level = "summary") %>%
+  vascr_plot_line() +ylim(0.75,1.1) + geom_vline(xintercept=0, colour="black", linetype="dashed", alpha=0.5)
+
+
+# wrangling and plotting --------------------------------------------------
 
 plot_data_1 = run1labeled %>% vascr_zero_time(65.234) 
 plot_data_2 = run2labeled %>% vascr_zero_time(65.965)
