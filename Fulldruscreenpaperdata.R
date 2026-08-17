@@ -159,7 +159,7 @@ combineddata <- vascr_combine(plot_data_1,plot_data_2, plot_data_3)
 plotdata = combineddata %>% 
   vascr_subset(unit = "Rb") %>% 
   vascr_resample_time(500) %>% 
-  vascr_normalise(-2, divide = TRUE) 
+  vascr_normalise(-1, divide = TRUE) 
 
 plotdata %>% vascr_subset (sampleid = c(100,15,17,18), time=c(-4,24)) %>% vascr_summarise(level = "summary") %>%
   vascr_plot_line() +ylim(0.75,1.1) + geom_vline(xintercept=0, colour="black", linetype="dashed", alpha=0.5)
@@ -176,7 +176,7 @@ combineddata <- vascr_combine(plot_data_1,plot_data_2, plot_data_3)
 plotdata = combineddata %>% 
   vascr_subset(unit = "Rb") %>% 
   vascr_resample_time(500) %>% 
-  vascr_normalise(-2, divide = TRUE) 
+  vascr_normalise(-1, divide = TRUE) 
 
 #vehicle
 plotdata %>% vascr_subset(sampleid = c(100),time=c(-4,30)) %>% vascr_summarise(level = "summary") %>%
@@ -290,3 +290,53 @@ sig_dunnett<- stats_data %>%  vascr_subset(sampleid=c(1:103)) %>% vascr_dunnett 
 
 
 sig_dunnett %>% filter(Label!="ns") %>%  filter(Label!="+")
+
+
+
+
+# figure for scott --------------------------------------------------------
+# for grant 
+# VPA
+highvpa<- plotdata %>% vascr_subset (sampleid = c(15,100),time=c(-4,48)) %>% vascr_summarise(level = "summary") %>%
+  vascr_plot_line() +ylim(0.5,1.2) 
+
+# VPA
+highdoxy<- plotdata %>% vascr_subset (sampleid = c(17,100),time=c(-4,48)) %>% vascr_summarise(level = "summary") %>%
+  vascr_plot_line() +ylim(0.5,1.20) +theme_bw()# different axes from the rest
+
+highvpa+highdoxy &theme_bw()
+
+
+
+
+# function for better plots -----------------------------------------------
+
+
+# want vehicle in the background, overlay high and low of each drug, each drug titled
+
+plot_drug<- function(data, drug, vehicle=100, time = c(-4, 30), ylim= c(0.5, 1.1)){ 
+  
+  library(stringr)
+  drugdf<- data %>% vascr:::vascr_subset(sampleid= drug)
+  drugname = str_extract(drugdf$Sample[1], "\\S+$")
+  
+  subset <- data %>% vascr:::vascr_subset(sampleid= c(drug,vehicle), time= time) %>% vascr_summarise(level="summary")
+  plot <- subset %>% vascr_plot_line() + 
+  theme_bw() +
+  scale_fill_manual(values= c("turquoise2", "royalblue1", "grey40"))+ 
+  scale_color_manual(values= c("turquoise2", "royalblue1", "darkgrey")) + ylim(ylim)+
+    labs(title=drugname )
+   
+  return(plot)
+}
+  
+  
+
+# plots condensed ---------------------------------------------------------
+
+plot_drug(plotdata, c(1:2)) #fingolimod
+plot_drug(plotdata, c(3:4)) # ibuprofen
+
+
+
+plot_drug(plotdata, c(26:27))
