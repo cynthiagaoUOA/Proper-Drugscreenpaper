@@ -334,8 +334,8 @@ plot_drug<- function(data, drug, vehicle=100, time = c(-4, 30), ylim= c(0.5, 1.1
 
 # plots condensed ---------------------------------------------------------
 
-plot_drug(plotdata, c(1:2)) #fingolimod
-plot_drug(plotdata, c(3:4)) # ibuprofen
+plot_drug(plotdata, c(1,7)) #fingolimod
+plot_drug(plotdata, c(2,8)) # ibuprofen
 
 
 
