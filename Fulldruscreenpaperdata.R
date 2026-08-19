@@ -165,7 +165,7 @@ plotdata %>% vascr_subset (sampleid = c(100,15,17,18), time=c(-4,24)) %>% vascr_
   vascr_plot_line() +ylim(0.75,1.1) + geom_vline(xintercept=0, colour="black", linetype="dashed", alpha=0.5)
 
 
-# wrangling and plotting --------------------------------------------------
+# wrangling  --------------------------------------------------
 
 plot_data_1 = run1labeled %>% vascr_zero_time(65.234) 
 plot_data_2 = run2labeled %>% vascr_zero_time(65.965)
@@ -177,88 +177,6 @@ plotdata = combineddata %>%
   vascr_subset(unit = "Rb") %>% 
   vascr_resample_time(500) %>% 
   vascr_normalise(-1, divide = TRUE) 
-
-#vehicle
-plotdata %>% vascr_subset(sampleid = c(100),time=c(-4,30)) %>% vascr_summarise(level = "summary") %>%
-  vascr_plot_line() +ylim(0, 1.1)
-
-#fingolimod
-fin<- plotdata %>% vascr_subset (sampleid = c(1,7,100),time=c(-4,30)) %>% vascr_summarise(level = "summary") %>%
-  vascr_plot_line() +ylim(0,1.1)
-
-#melatonin#
-mel<- plotdata %>% vascr_subset (sampleid = c(2,8,100),time=c(-4,30)) %>% vascr_summarise(level = "summary") %>%
-  vascr_plot_line() +ylim(0,1.1)
-
-#riluzole
-ril<- plotdata %>% vascr_subset (sampleid = c(3,9,100),time=c(-4,30)) %>% vascr_summarise(level = "summary") %>%
-  vascr_plot_line() +ylim(0,1.1)
-
-#ibuprofen
-ibu<- plotdata %>% vascr_subset (sampleid = c(4,10,100),time=c(-4,30)) %>% vascr_summarise(level = "summary") %>%
-  vascr_plot_line() +ylim(0,1.1)
-
-
-#cilostazol
-cilo<- plotdata %>% vascr_subset (sampleid = c(5,11,100),time=c(-4,30)) %>% vascr_summarise(level = "summary") %>%
-  vascr_plot_line() +ylim(0,1.1)
-
-#pravastatin
-prava<- plotdata %>% vascr_subset (sampleid = c(6,12,100),time=c(-4,30)) %>% vascr_summarise(level = "summary") %>%
-  vascr_plot_line() +ylim(0,1.1)
-
-#ticagrelor
-tica<- plotdata %>% vascr_subset (sampleid = c(13,19,100),time=c(-4,30)) %>% vascr_summarise(level = "summary") %>%
-  vascr_plot_line() +ylim(0,1.1)
-
-#icatibant
-icat<- plotdata %>% vascr_subset (sampleid = c(14,20,100),time=c(-4,30)) %>% 
-  vascr_exclude(well="D12") %>%  vascr_summarise(level = "summary") %>%
-  vascr_plot_line() +ylim(0,1.1) 
-
-# VPA
-vpa<- plotdata %>% vascr_subset (sampleid = c(15,21,100),time=c(-4,30)) %>% vascr_summarise(level = "summary") %>%
-  vascr_plot_line() +ylim(0,1.25) # different axes from the rest
-
-#long timeline
-plotdata %>% vascr_subset (sampleid = c(15,21,100),time=c(-4,70)) %>% vascr_summarise(level = "summary") %>%
-  vascr_plot_line() +ylim(0,1.25) # different axes from the rest
-
-#imatinib
-iman<- plotdata %>% vascr_subset (sampleid = c(16,22,100),time=c(-4,30)) %>% vascr_summarise(level = "summary") %>%
-  vascr_plot_line() +ylim(0,1.1)
-
-plotdata %>% vascr_subset (sampleid = c(16,22,100),time=c(-4,30)) %>% vascr_summarise(level = "summary") %>%
-  vascr_plot_line() +ylim(0,1.1) 
-#toxcity
-
-#doxycycline
-doxy<- plotdata %>% vascr_subset (sampleid = c(17,23,100),time=c(-4,30)) %>% vascr_summarise(level = "summary") %>%
-  vascr_plot_line() +ylim(0,1.1)
-#low toxic but high is protective?
-
-#rapamycin
-rapa<- plotdata %>% vascr_subset (sampleid = c(18,24,100),time=c(-4,50)) %>% vascr_summarise(level = "summary") %>%
-  vascr_plot_line() +ylim(0,1.1)
-#initially high then declines below vehicle. Very interesting.
-
-#sapropterin
-
-#two conc for paper
-saprop<- plotdata %>% vascr_subset (sampleid = c(26,27,100),time=c(-4,30)) %>% vascr_summarise(level = "summary") %>%
-  vascr_plot_line() +ylim(0,1.1)
-
-mel+ ril+ibu+cilo+prava+icat+ saprop & ylim(0, 1.1) & theme_bw() & ylab("Rb (ohm cm^2)")
-
-
-#protective
-vpa+doxy+rapa & theme_bw() & ylab("Rb (ohm cm^2)")
-
-
-#disruptive
-
-tica+iman+fin& theme_bw() & ylab("Rb (ohm cm^2)")
-
 
 
 # Stats -------------------------------------------------------------------
@@ -314,7 +232,7 @@ highvpa+highdoxy &theme_bw()
 
 # want vehicle in the background, overlay high and low of each drug, each drug titled
 
-plot_drug<- function(data, drug, vehicle=100, time = c(-4, 30), ylim= c(0.5, 1.1)){ 
+plot_drug<- function(data, drug, vehicle=100, time = c(-4, 48), ylim= c(0.5, 1.1)){ 
   
   library(stringr)
   drugdf<- data %>% vascr:::vascr_subset(sampleid= drug)
@@ -323,9 +241,9 @@ plot_drug<- function(data, drug, vehicle=100, time = c(-4, 30), ylim= c(0.5, 1.1
   subset <- data %>% vascr:::vascr_subset(sampleid= c(drug,vehicle), time= time) %>% vascr_summarise(level="summary")
   plot <- subset %>% vascr_plot_line() + 
   theme_bw() +
-  scale_fill_manual(values= c("turquoise2", "royalblue1", "grey40"))+ 
-  scale_color_manual(values= c("turquoise2", "royalblue1", "darkgrey")) + ylim(ylim)+
-    labs(title=drugname )
+  scale_fill_manual(values= c("#00A9FF", "#FF61CC", "grey40"))+ 
+  scale_color_manual(values= c("#00A9FF", "#FF61CC", "lightgrey")) + ylim(ylim)+
+    labs(title=drugname ) + geom_vline(xintercept= 0, linetype="dashed")
    
   return(plot)
 }
@@ -334,9 +252,36 @@ plot_drug<- function(data, drug, vehicle=100, time = c(-4, 30), ylim= c(0.5, 1.1
 
 # plots condensed ---------------------------------------------------------
 
-plot_drug(plotdata, c(1,7)) #fingolimod
-plot_drug(plotdata, c(2,8)) # ibuprofen
+#vehicle
+#plotdata %>% vascr_subset(sampleid = c(100),time=c(-4,70)) %>% vascr_summarise(level = "summary") %>%
+#  vascr_plot_line() +ylim(0, 1.1)
 
 
 
-plot_drug(plotdata, c(26:27))
+#toxic
+fin<- plot_drug(plotdata, c(7,1)) 
+iman<- plot_drug(plotdata, c(22,16))
+tica<- plot_drug(plotdata, c(19,13))
+
+fin+iman+tica & theme(legend.position="none")
+
+# protective
+doxy<- plot_drug(plotdata, c(23,17)) 
+vpa<- plot_drug(plotdata, c(21,15))
+rapa<- plot_drug(plotdata, c(24,18))
+
+doxy+vpa+rapa & theme(legend.position="none")
+
+
+# no effect
+mel <- plot_drug(plotdata, c(8,2)) 
+ril<- plot_drug(plotdata, c(9,3)) 
+ibu <- plot_drug(plotdata, c(10,4)) 
+cilo <- plot_drug(plotdata, c(11,5)) 
+prava<- plot_drug(plotdata, c(6,12)) 
+icat<- plot_drug(plotdata, c(20,14)) 
+saprop<- plot_drug(plotdata, c(27,26)) 
+  
+mel+ ril+ibu+cilo+prava+icat+ saprop & theme(legend.position="none")
+
+mel
