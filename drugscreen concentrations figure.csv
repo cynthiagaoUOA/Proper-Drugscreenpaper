@@ -1,0 +1,63 @@
+﻿Drug,type,low_uM,high_uM,Label,tested_low_uM,tested_high_uM
+,,,,,,
+Fingolimod,clinical,0.00198,0.0202,"Kacirov et al., 2025",0.002,0.02
+Fingolimod,in vitro,0.003,0.003,"Groves et al., 2014 (EC50 on ECs)",0.002,0.02
+Fingolimod,in vitro,0.05,0.05,"Spampinator et al., 2015 (human brain microvascular Ecs, TNF-a) ",0.002,0.02
+Fingolimod,clinical,,,cmax,,
+Fingolimod,in vitro,0.3,1,"Wei et al., 2010 (human brain microvascular ECs, TNF-a insult)",0.002,0.02
+,,,,,,
+Imatinib,clinical,4,4,"steady state cmax, referenced within ref",1,10
+Imatinib,in vitro,10,10,"Aman et al huvec, thrombin ",1,10
+Imatinib,in vitro,10,10,human microvascular Ecs ,1,10
+Imatinib,in vitro,2,50,iBBB,1,10
+,,,,,,
+ticagrelor,clinical,1.5,8,simulated pharmacokinetics,1,10
+ticagrelor,in vitro,1,10,HUVEC,1,10
+ticagrelor,clinical,7,7,Human brain microvascular ,1,10
+ticagrelor,in vitro,2,10,,1,10
+,,,,,,
+doxycycline,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+VPA,clinical,350,700,patient plasma concentrations,100,1000
+VPA,in vitro,300,600,,100,1000
+,,,,,,
+,,,,,,
+Rapamycin,clinical,0.006,0.016,placeholder low,0.001,0.01
+Rapamycin,clinical,0.001,0.001,IC50,0.001,0.01
+Rapamycin,clinical,0.001,0.001,steady in stent patients,0.001,0.01
+Rapamycin,in vitro,0.01,0.1,rat Ecs,0.001,0.01
+,,,,,,
+melatonin,,,,,0.001,0.01
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+riluzole,clinical,0.8,0.8,up to for ALS,1,10
+riluzole,clinical,1.2,1.2,Up to,1,10
+riluzole,in vitro,2.5,5,"Wang et al (human brain Ecs, oxidative stress)",1,10
+riluzole,in vitro,1,10,HUVEC,1,10
+,,,,,,
+ibuprofen,clinical,370,370,"Janssen & Venema., 1985 (cmax) ",30,300
+ibuprofen,clinical,970,970,predicted toxicity likely above this plasma conc,30,300
+,,,,,,
+,,,,,,
+cilostazol,in vitro,1,10,"Horai et al., 2012 (primary rat Ecs, OGD, EC)",0.2,2
+cilostazol,in vitro,1,10,D3s,0.2,2
+cilostazol,in vitro,1,30,bEND.3 cells. 3uM best,0.2,2
+cilostazol,clinical,1.3,2.7,seen in patients,0.2,2
+cilostazol,clinical,2,8,seen in patients,0.2,2
+,,,,,,
+pravastatin,clinical,0.1,0.1,cmax,0.1,1
+pravastatin,in vitro,10,10,HUVEC,0.1,1
+pravastatin,in vitro,0.01,100,HMVEC H2O2 ,0.1,1
+,,,,,,
+,,,,,,
+icatibant,in vitro,0.1,1,EC?,0.1,1
+icatibant,clinical,0.7,0.7,plasma concentrations,0.1,1
+icatibant,clinical,0.215,0.215,cmax seen,0.1,1
+,,,,,,
+,,,,,,
+,,,,,,
+sapropterin,clinical,0.3183,0.4,patients,1,10
