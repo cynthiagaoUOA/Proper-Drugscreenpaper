@@ -173,10 +173,31 @@ plot_data_3 = run3labeled %>% vascr_zero_time(63.774)
 
 combineddata <- vascr_combine(plot_data_1,plot_data_2, plot_data_3)
 
+# default Rb
 plotdata = combineddata %>% 
   vascr_subset(unit = "Rb") %>% 
   vascr_resample_time(500) %>% 
   vascr_normalise(-1, divide = TRUE) 
+
+# Cm and the rest
+cmdata = combineddata %>% 
+  vascr_subset(unit = "Cm") %>% 
+  vascr_resample_time(500) %>% 
+  vascr_normalise(-1, divide = TRUE) 
+
+# alpha
+alphadata = combineddata %>% 
+  vascr_subset(unit = "alpha") %>% 
+  vascr_resample_time(500) %>% 
+  vascr_normalise(-1, divide = TRUE) 
+
+# resis
+r4000data = combineddata %>% 
+  vascr_subset(unit = "R", frequency = "4000") %>% 
+  vascr_resample_time(500) %>% 
+  vascr_normalise(-1, divide = TRUE) 
+
+
 
 
 # Stats -------------------------------------------------------------------
@@ -285,3 +306,90 @@ saprop<- plot_drug(plotdata, c(27,26))
 mel+ ril+ibu+cilo+prava+icat+ saprop & theme(legend.position="none")
 
 mel
+
+# Cm and the rest ------------
+
+#toxic
+fin<- plot_drug(cmdata, c(7,1)) 
+iman<- plot_drug(cmdata, c(22,16))
+tica<- plot_drug(cmdata, c(19,13))
+
+fin+iman+tica & theme(legend.position="none")
+
+# protective
+doxy<- plot_drug(cmdata, c(23,17)) 
+vpa<- plot_drug(cmdata, c(21,15))
+rapa<- plot_drug(cmdata, c(24,18))
+
+doxy+vpa+rapa & theme(legend.position="none")
+
+
+# no effect
+mel <- plot_drug(cmdata, c(8,2)) 
+ril<- plot_drug(cmdata, c(9,3)) 
+ibu <- plot_drug(cmdata, c(10,4)) 
+cilo <- plot_drug(cmdata, c(11,5)) 
+prava<- plot_drug(cmdata, c(6,12)) 
+icat<- plot_drug(cmdata, c(20,14)) 
+saprop<- plot_drug(cmdata, c(27,26)) 
+
+mel+ ril+ibu+cilo+prava+icat+ saprop & theme(legend.position="none")
+
+
+### alpha ---------
+
+
+fin<- plot_drug(alphadata, c(7,1)) 
+iman<- plot_drug(alphadata, c(22,16))
+tica<- plot_drug(alphadata, c(19,13))
+
+fin+iman+tica & theme(legend.position="none")
+
+# protective
+doxy<- plot_drug(alphadata, c(23,17)) 
+vpa<- plot_drug(alphadata, c(21,15))
+rapa<- plot_drug(alphadata, c(24,18))
+
+doxy+vpa+rapa & theme(legend.position="none")
+
+
+# no effect
+mel <- plot_drug(alphadata, c(8,2)) 
+ril<- plot_drug(alphadata, c(9,3)) 
+ibu <- plot_drug(alphadata, c(10,4)) 
+cilo <- plot_drug(alphadata, c(11,5)) 
+prava<- plot_drug(alphadata, c(6,12)) 
+icat<- plot_drug(alphadata, c(20,14)) 
+saprop<- plot_drug(alphadata, c(27,26)) 
+
+mel+ ril+ibu+cilo+prava+icat+ saprop & theme(legend.position="none")
+
+### Resistance 4000 -----------------------------------
+
+fin<- plot_drug(r4000data, c(7,1)) 
+iman<- plot_drug(r4000data, c(22,16))
+tica<- plot_drug(r4000data, c(19,13))
+
+fin+iman+tica & theme(legend.position="none") & labs(y="R 4000")
+
+# protective
+doxy<- plot_drug(r4000data, c(23,17)) 
+vpa<- plot_drug(alphadata, c(21,15))
+rapa<- plot_drug(alphadata, c(24,18))
+
+doxy+vpa+rapa & theme(legend.position="none")& labs(y="R 4000")
+
+
+
+# no effect
+mel <- plot_drug(alphadata, c(8,2)) 
+ril<- plot_drug(alphadata, c(9,3)) 
+ibu <- plot_drug(alphadata, c(10,4)) 
+cilo <- plot_drug(alphadata, c(11,5)) 
+prava<- plot_drug(alphadata, c(6,12)) 
+icat<- plot_drug(alphadata, c(20,14)) 
+saprop<- plot_drug(alphadata, c(27,26)) 
+
+mel+ ril+ibu+cilo+prava+icat+ saprop & theme(legend.position="none")& labs(y="R 4000")
+
+
